@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты Marvel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Вселенная Marvel: Хронология Проектов</h1>
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="Поиск по названию...">
+            <button id="theme-toggle">Сменить тему</button>
+        </div>
+    </header>
+
+    <main id="project-list">
+        </main>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title">Название проекта</h2>
+            <p><strong>Дата выхода:</strong> <span id="modal-release-date"></span></p>
+            <p><strong>Продолжительность:</strong> <span id="modal-duration"></span></p>
+            <p><strong>Режиссёр(ы):</strong> <span id="modal-director"></span></p>
+            <p><strong>Озвучка:</strong> <span id="modal-voice-over"></span></p>
+            <p><strong>Рейтинги:</strong> <span id="modal-ratings">Загрузка...</span></p>
+            <p><strong>HDrezka:</strong> <span id="modal-hdrezka">Поиск...</span></p>
+            <div id="modal-notes"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
