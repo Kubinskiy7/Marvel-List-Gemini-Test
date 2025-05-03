@@ -22,7 +22,7 @@
     </header>
 
     <nav id="nav-menu">
-        <button id="close-menu-btn">&times;</button>
+        <button id="close-menu-btn">×</button>
         <h3>Навигация</h3>
         <ul id="nav-links">
             </ul>
@@ -32,15 +32,16 @@
 
     <div id="project-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button">×</span>
             <h2 id="modal-title">Название проекта</h2>
             <p><strong>Дата выхода:</strong> <span id="modal-release-date"></span></p>
             <p><strong>Продолжительность:</strong> <span id="modal-duration"></span></p>
             <p><strong>Режиссёр(ы):</strong> <span id="modal-director"></span></p>
             <p><strong>Озвучка:</strong> <span id="modal-voice-over"></span></p>
-            <p><strong>Рейтинги:</strong> <span id="modal-ratings">Загрузка...</span></p>
+            <p><strong>Рейтинги:</strong> IMDb: <span id="modal-imdb"></span> / Кинопоиск: <span id="modal-kinopoisk"></span></p>
             <div id="modal-link-container">
                 <p><strong>Ссылка:</strong> <span id="modal-link"></span></p>
+                 <small class="disclaimer" id="modal-link-disclaimer" style="display: none;">(Внимание: ссылки на некоторые ресурсы могут вести на неофициально размещенный контент)</small>
             </div>
             <div id="modal-notes"></div>
         </div>
