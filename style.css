@@ -11,6 +11,7 @@
     --menu-bg-light: #f1f1f1;
     --menu-border-light: #cccccc;
     --link-color-light: #000000;
+    --link-hover-light: #555555;
 
     --bg-color-dark: #000000; /* AMOLED черный фон */
     --text-color-dark: #e0e0e0;
@@ -23,6 +24,7 @@
     --menu-bg-dark: #222222;
     --menu-border-dark: #444444;
     --link-color-dark: #ffffff;
+    --link-hover-dark: #bbbbbb;
 
 
     --bg-color: var(--bg-color-light);
@@ -36,6 +38,7 @@
     --menu-bg: var(--menu-bg-light);
     --menu-border: var(--menu-border-light);
     --link-color: var(--link-color-light);
+    --link-hover: var(--link-hover-light);
 
     --font-family: 'Roboto', sans-serif;
     --border-radius: 8px;
@@ -56,6 +59,7 @@
     --menu-bg: var(--menu-bg-dark);
     --menu-border: var(--menu-border-dark);
     --link-color: var(--link-color-dark);
+    --link-hover: var(--link-hover-dark);
 }
 
 * {
@@ -63,6 +67,11 @@
     margin: 0;
     padding: 0;
 }
+
+html {
+    scroll-behavior: smooth; /* Плавная прокрутка для всей страницы */
+}
+
 
 body {
     font-family: var(--font-family);
@@ -97,6 +106,7 @@ header {
     cursor: pointer;
     padding: 0.5rem;
     transition: color var(--transition-speed);
+    line-height: 1; /* Убираем лишний отступ у эмодзи */
 }
 .header-icon:hover {
     color: var(--accent-color);
@@ -119,6 +129,7 @@ header {
     visibility: hidden;
     transition: opacity var(--transition-speed) ease-in-out, visibility var(--transition-speed) ease-in-out;
     background-color: var(--header-bg); /* Чтобы перекрывал хедер при появлении */
+    padding: 2px 0; /* Небольшой отступ для тени */
 }
 
 .search-container.visible {
@@ -131,15 +142,16 @@ header {
     padding: 0.5rem 0.8rem; /* Уменьшил паддинги */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    background-color: var(--bg-color);
+    background-color: var(--card-bg); /* Фон поля ввода как у карточек */
     color: var(--text-color);
-    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
     font-size: 0.9rem;
 }
 
 #search-input:focus {
     outline: none;
     border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-hover);
 }
 
 /* Навигационное меню */
@@ -152,7 +164,7 @@ header {
     background-color: var(--menu-bg);
     z-index: 1001; /* Выше хедера */
     padding: 1rem;
-    padding-top: var(--header-height); /* Отступ сверху */
+    padding-top: calc(var(--header-height) + 10px); /* Отступ сверху с запасом */
     border-right: 1px solid var(--menu-border);
     transition: left var(--transition-speed) ease-in-out, background-color var(--transition-speed);
     overflow-y: auto; /* Прокрутка если много ссылок */
@@ -179,15 +191,20 @@ header {
     text-decoration: none;
     color: var(--link-color);
     border-radius: 4px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #nav-links li a.section-link { font-weight: bold; }
 #nav-links li a.phase-link { padding-left: 1.5rem; }
 #nav-links li a.subgroup-link { padding-left: 2.5rem; font-style: italic; }
+#nav-links li a.subgroup-specific-link { padding-left: 3.5rem; font-style: italic; font-size: 0.9em; } /* Для LEGO, ABC и т.д. */
 
 
 #nav-links li a:hover {
     background-color: var(--border-color);
+    color: var(--link-hover);
 }
 
 #close-menu-btn {
@@ -227,7 +244,7 @@ main {
     margin: 0 auto;
 }
 
-.section-header, .phase-header, .subgroup-header {
+.section-header, .phase-header, .subgroup-header, .subgroup-specific-header {
     margin-top: 2rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
@@ -239,6 +256,7 @@ main {
 .section-header { font-size: 1.8rem; }
 .phase-header { font-size: 1.5rem; margin-left: 1rem; }
 .subgroup-header { font-size: 1.3rem; margin-left: 2rem; font-style: italic; }
+.subgroup-specific-header { font-size: 1.1rem; margin-left: 3rem; font-style: italic; border-bottom-style: dashed;}
 
 .project-item {
     background-color: var(--card-bg);
@@ -336,9 +354,11 @@ main {
 #modal-link-container a {
     color: var(--accent-color);
     text-decoration: none;
+    transition: color 0.2s;
 }
 #modal-link-container a:hover {
     text-decoration: underline;
+    color: var(--link-hover);
 }
 
 #modal-notes {
@@ -386,8 +406,8 @@ main {
         padding-top: var(--header-height); /* Отступ для мобильных */
     }
     .search-container {
-        left: 50px;
-        right: 90px; /* Немного больше места справа */
+        left: 55px; /* Больше отступ слева */
+        right: 95px; /* Немного больше места справа */
     }
     main {
         padding: 1rem;
@@ -409,10 +429,14 @@ main {
     }
      .search-container {
         left: 45px;
-        right: 80px;
+        right: 85px;
     }
     #search-input {
         font-size: 0.8rem;
     }
-}
+    #nav-menu {
+        width: 220px;
+        left: -240px;
+    }
 
+}
