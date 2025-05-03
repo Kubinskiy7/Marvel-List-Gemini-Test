@@ -11,14 +11,23 @@
 </head>
 <body>
     <header>
-        <h1>Вселенная Marvel: Хронология Проектов</h1>
-        <div class="controls">
-            <input type="text" id="search-input" placeholder="Поиск по названию...">
-            <button id="theme-toggle">Сменить тему</button>
+        <button id="menu-toggle" class="header-icon">☰</button>
+        <div id="search-container" class="search-container">
+             <input type="text" id="search-input" placeholder="Поиск...">
+        </div>
+        <div class="header-controls">
+            <button id="search-toggle" class="header-icon">🔍</button>
+            <button id="theme-toggle" class="header-icon">☀️</button>
         </div>
     </header>
 
-    <main id="project-list">
+    <nav id="nav-menu">
+        <button id="close-menu-btn">&times;</button>
+        <h3>Навигация</h3>
+        <ul id="nav-links">
+            </ul>
+    </nav>
+    <div id="overlay"></div> <main id="project-list">
         </main>
 
     <div id="project-modal" class="modal">
@@ -30,7 +39,9 @@
             <p><strong>Режиссёр(ы):</strong> <span id="modal-director"></span></p>
             <p><strong>Озвучка:</strong> <span id="modal-voice-over"></span></p>
             <p><strong>Рейтинги:</strong> <span id="modal-ratings">Загрузка...</span></p>
-            <p><strong>HDrezka:</strong> <span id="modal-hdrezka">Поиск...</span></p>
+            <div id="modal-link-container">
+                <p><strong>Ссылка:</strong> <span id="modal-link"></span></p>
+            </div>
             <div id="modal-notes"></div>
         </div>
     </div>
