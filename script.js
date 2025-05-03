@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Данные ---
-    // Включены эмодзи, ссылки из примечаний и скорректирована структура саг/фаз
+    // Включены новые эмодзи, ссылки из примечаний, рейтинги для первых 4 фильмов
      const marvelData = [
       {
-        saga: "Сага Бесконечности", // Добавлено поле Саги
-        groups: [ // Группируем фазы внутри саги
+        saga: "Сага Бесконечности",
+        groups: [
           {
             phase: "Фаза 1",
             projects: [
-              { id: 1, title: "Железный человек", voice_over: "Дубляж", duration: "2:06:10", director: "Джон Фавро", release_date: "14 апреля 2008 года", type: "Фильм" },
-              { id: 2, title: "Невероятный Халк", voice_over: "Дубляж", duration: "1:52:14", director: "Луи Летерье", release_date: "6 июня 2008 года", type: "Фильм" },
-              { id: 3, title: "Железный человек 2", voice_over: "Дубляж", duration: "2:04:34", director: "Джон Фавро", release_date: "28 апреля 2010 года", type: "Фильм" },
-              { id: 4, title: "Тор", voice_over: "Дубляж", duration: "1:54:50", director: "Кеннет Брана", release_date: "28 апреля 2011 года", type: "Фильм" },
+              { id: 1, title: "Железный человек", voice_over: "Дубляж", duration: "2:06:10", director: "Джон Фавро", release_date: "14 апреля 2008 года", type: "Фильм", imdb_rating: "7.9", kinopoisk_rating: "7.9", link_search_needed: true }, // Добавлены рейтинги, ссылка требует поиска
+              { id: 2, title: "Невероятный Халк", voice_over: "Дубляж", duration: "1:52:14", director: "Луи Летерье", release_date: "6 июня 2008 года", type: "Фильм", imdb_rating: "6.6", kinopoisk_rating: "6.9", link_search_needed: true }, // Добавлены рейтинги, ссылка требует поиска
+              { id: 3, title: "Железный человек 2", voice_over: "Дубляж", duration: "2:04:34", director: "Джон Фавро", release_date: "28 апреля 2010 года", type: "Фильм", imdb_rating: "6.9", kinopoisk_rating: "7.5", link_search_needed: true }, // Добавлены рейтинги, ссылка требует поиска
+              { id: 4, title: "Тор", voice_over: "Дубляж", duration: "1:54:50", director: "Кеннет Брана", release_date: "28 апреля 2011 года", type: "Фильм", imdb_rating: "7.0", kinopoisk_rating: "7.1", link_search_needed: true }, // Добавлены рейтинги, ссылка требует поиска
               { id: 5, title: "Первый мститель", voice_over: "Дубляж", duration: "2:04:11", director: "Джо Джонстон", release_date: "28 июля 2011 года", type: "Фильм" },
-              { id: 6, title: "Короткометражка Marvel: Консультант", voice_over: "Leiunium Voices или Flarrow Films", duration: "03:57", director: "Лейтум", release_date: "13 сентября 2011 года", type: "Короткометражка" },
+              { id: 6, title: "Короткометражка Marvel: Консультант", voice_over: "Leiunium Voices или Flarrow Films", duration: "03:57", director: "Лейтум", release_date: "13 сентября 2011 года", type: "Короткометражка", link_search_needed: true },
               { id: 7, title: "Короткометражка Marvel: Забавный случай на пути к молоту Тора", voice_over: "Несмертельное оружие", duration: "04:03", director: "Лейтум", release_date: "25 октября 2011 года", type: "Короткометражка" },
-              { id: 8, title: "Мстители Ⓐ", voice_over: "Дубляж", duration: "2:22:54", director: "Джосс Уидон", release_date: "3 мая 2012 года", type: "Фильм" } // Добавлен эмодзи из PDF
+              { id: 8, title: "Мстители Ⓐ", voice_over: "Дубляж", duration: "2:22:54", director: "Джосс Уидон", release_date: "3 мая 2012 года", type: "Фильм" }
             ]
           },
           {
@@ -23,125 +23,124 @@ document.addEventListener('DOMContentLoaded', () => {
             projects: [
               { id: 9, title: "Короткометражка Marvel: Образец 47", voice_over: "Несмертельное оружие", duration: "11:20", director: "Луис Д'Эспозито", release_date: "13 июля 2012 года", type: "Короткометражка" },
               { id: 10, title: "Железный человек 3", voice_over: "Дубляж", duration: "2:10:32", director: "Шейн Блэк", release_date: "2 мая 2013 года", type: "Фильм" },
-              { id: 11, title: "Короткометражка Marvel: Агент Картер", voice_over: "Flarrow Films", duration: "15:29", director: "Луис Д'Эспозито", release_date: "19 июля 2013 года", type: "Короткометражка" },
+              { id: 11, title: "Короткометражка Marvel: Агент Картер", voice_over: "Flarrow Films", duration: "15:29", director: "Луис Д'Эспозито", release_date: "19 июля 2013 года", type: "Короткометражка", link_search_needed: true },
               { id: 12, title: "Тор 2: Царство тьмы", voice_over: "Дубляж", duration: "1:52:03", director: "Алан Тейлор", release_date: "22 октября 2013 года", type: "Фильм" },
-              { id: 13, title: "Короткометражка Marvel: Да здравствует король", voice_over: "Flarrow Films", duration: "13:51", director: "Дрю Пирс", release_date: "4 февраля 2014 года", type: "Короткометражка" },
+              { id: 13, title: "Короткометражка Marvel: Да здравствует король", voice_over: "Flarrow Films", duration: "13:51", director: "Дрю Пирс", release_date: "4 февраля 2014 года", type: "Короткометражка", link_search_needed: true },
               { id: 14, title: "Первый мститель: Другая война", voice_over: "Дубляж", duration: "2:15:54", director: "Джо Руссо, Энтони Руссо", release_date: "13 марта 2014 года", type: "Фильм" },
               { id: 15, title: "Стражи Галактики", voice_over: "Дубляж", duration: "2:00:51", director: "Джеймс Ганн", release_date: "31 июля 2014 года", type: "Фильм" },
-              { id: 16, title: "Мстители: Эра Альтрона Ⓐ", voice_over: "Дубляж", duration: "2:21:18", director: "Джосс Уидон", release_date: "23 апреля 2015 года", type: "Фильм" }, // Добавлен эмодзи
+              { id: 16, title: "Мстители: Эра Альтрона Ⓐ", voice_over: "Дубляж", duration: "2:21:18", director: "Джосс Уидон", release_date: "23 апреля 2015 года", type: "Фильм" },
               { id: 17, title: "Человек-муравей", voice_over: "Дубляж", duration: "1:57:06", director: "Пейтон Рид", release_date: "16 июля 2015 года", type: "Фильм" }
             ]
           },
-          {
+           {
             phase: "Фаза 3",
             projects: [
-              { id: 18, title: "Первый мститель: Противостояние VS", voice_over: "Дубляж", duration: "2:27:41", director: "Джо Руссо, Энтони Руссо", release_date: "5 мая 2016 года", type: "Фильм" }, // Добавлен эмодзи
-              { id: 19, title: "Доктор Стрэндж", voice_over: "Дубляж", duration: "1:54:58", director: "Скотт Дерриксон", release_date: "28 октября 2016 года", type: "Фильм" },
-              { id: 20, title: "Стражи Галактики. Часть 2", voice_over: "Дубляж", duration: "2:15:46", director: "Джеймс Ганн", release_date: "19 апреля 2017 года", type: "Фильм" },
-              { id: 21, title: "Человек-паук: Возвращение домой", voice_over: "Дубляж", duration: "2:13:28", director: "Джон Уоттс", release_date: "6 июля 2017 года", type: "Фильм" },
-              { id: 22, title: "Тор: Рагнарёк", voice_over: "Дубляж", duration: "2:10:30", director: "Тайка Вайтити", release_date: "10 октября 2017 года", type: "Фильм" },
-              { id: 23, title: "Чёрная Пантера", voice_over: "Дубляж", duration: "2:14:33", director: "Райан Куглер", release_date: "29 января 2018 года", type: "Фильм" },
-              { id: 24, title: "Мстители: Война бесконечности Ⓐ", voice_over: "Дубляж", duration: "2:29:21", director: "Энтони Руссо, Джо Руссо", release_date: "23 апреля 2018 года", type: "Фильм" }, // Добавлен эмодзи
-              { id: 25, title: "Человек-муравей и Оса", voice_over: "Дубляж", duration: "1:58:06", director: "Пейтон Рид", release_date: "4 июля 2018 года", type: "Фильм" },
-              { id: 26, title: "Капитан Марвел", voice_over: "Дубляж", duration: "2:03:42", director: "Анна Боден, Райан Флек", release_date: "27 февраля 2019 года", type: "Фильм" },
-              { id: 27, title: "Мстители: Финал Ⓐ", voice_over: "Дубляж", duration: "3:01:47", director: "Энтони Руссо, Джо Руссо", release_date: "22 апреля 2019 года", type: "Фильм" }, // Добавлен эмодзи
-              { id: 28, title: "Человек-паук: Вдали от дома", voice_over: "Дубляж", duration: "2:09:23", director: "Джон Уоттс", release_date: "28 июня 2019 года", type: "Фильм" }
+                { id: 18, title: "Первый мститель: Противостояние VS", voice_over: "Дубляж", duration: "2:27:41", director: "Джо Руссо, Энтони Руссо", release_date: "5 мая 2016 года", type: "Фильм" },
+                { id: 19, title: "Доктор Стрэндж", voice_over: "Дубляж", duration: "1:54:58", director: "Скотт Дерриксон", release_date: "28 октября 2016 года", type: "Фильм" },
+                { id: 20, title: "Стражи Галактики. Часть 2", voice_over: "Дубляж", duration: "2:15:46", director: "Джеймс Ганн", release_date: "19 апреля 2017 года", type: "Фильм" },
+                { id: 21, title: "Человек-паук: Возвращение домой", voice_over: "Дубляж", duration: "2:13:28", director: "Джон Уоттс", release_date: "6 июля 2017 года", type: "Фильм" },
+                { id: 22, title: "Тор: Рагнарёк", voice_over: "Дубляж", duration: "2:10:30", director: "Тайка Вайтити", release_date: "10 октября 2017 года", type: "Фильм" },
+                { id: 23, title: "Чёрная Пантера", voice_over: "Дубляж", duration: "2:14:33", director: "Райан Куглер", release_date: "29 января 2018 года", type: "Фильм" },
+                { id: 24, title: "Мстители: Война бесконечности Ⓐ", voice_over: "Дубляж", duration: "2:29:21", director: "Энтони Руссо, Джо Руссо", release_date: "23 апреля 2018 года", type: "Фильм" },
+                { id: 25, title: "Человек-муравей и Оса", voice_over: "Дубляж", duration: "1:58:06", director: "Пейтон Рид", release_date: "4 июля 2018 года", type: "Фильм" },
+                { id: 26, title: "Капитан Марвел", voice_over: "Дубляж", duration: "2:03:42", director: "Анна Боден, Райан Флек", release_date: "27 февраля 2019 года", type: "Фильм" },
+                { id: 27, title: "Мстители: Финал Ⓐ", voice_over: "Дубляж", duration: "3:01:47", director: "Энтони Руссо, Джо Руссо", release_date: "22 апреля 2019 года", type: "Фильм" },
+                { id: 28, title: "Человек-паук: Вдали от дома", voice_over: "Дубляж", duration: "2:09:23", director: "Джон Уоттс", release_date: "28 июня 2019 года", type: "Фильм" }
             ]
           }
         ]
       },
-      {
+       {
         saga: "Сага Мультивселенной",
         groups: [
           {
             phase: "Фаза 4",
             projects: [
-              { id: 29, title: "Ванда/Вижн", voice_over: "HDrezka Studio", duration: "9 серий (29-49 мин)", director: "Мэтт Шекман", release_date: "15 января 2021 года", type: "Сериал" },
-              { id: 30, title: "Сокол и Зимний Солдат", voice_over: "HDrezka Studio или Flarrow Films", duration: "6 серий (49-60 мин)", director: "Кари Скогланд", release_date: "19 марта 2021 года", type: "Сериал" },
-              { id: 31, title: "Локи (1 сезон)", voice_over: "HDrezka Studio или Flarrow Films", duration: "6 серий (42-54 мин)", director: "Кейт Херрон", release_date: "9 июня 2021 года", type: "Сериал" },
+              { id: 29, title: "Ванда/Вижн", voice_over: "HDrezka Studio", duration: "9 серий (29-49 мин)", director: "Мэтт Шекман", release_date: "15 января 2021 года", type: "Сериал", link_search_needed: true },
+              { id: 30, title: "Сокол и Зимний Солдат", voice_over: "HDrezka Studio или Flarrow Films", duration: "6 серий (49-60 мин)", director: "Кари Скогланд", release_date: "19 марта 2021 года", type: "Сериал", link_search_needed: true },
+              { id: 31, title: "Локи (1 сезон)", voice_over: "HDrezka Studio или Flarrow Films", duration: "6 серий (42-54 мин)", director: "Кейт Херрон", release_date: "9 июня 2021 года", type: "Сериал", link_search_needed: true },
               { id: 32, title: "Чёрная Вдова", voice_over: "Дубляж", duration: "2:13:46", director: "Кейт Шортланд", release_date: "8 июля 2021 года", type: "Фильм" },
-              { id: 33, title: "Что, если...? (1 сезон) ❔", voice_over: "HDrezka Studio или Flarrow Films", duration: "9 серий (34-36 мин)", director: "Брайан Эндрюс", release_date: "11 августа 2021 года", type: "Анимационный сериал" }, // Добавлен эмодзи
+              { id: 33, title: "Что, если...? (1 сезон) ❔", voice_over: "HDrezka Studio или Flarrow Films", duration: "9 серий (34-36 мин)", director: "Брайан Эндрюс", release_date: "11 августа 2021 года", type: "Анимационный сериал", link_search_needed: true },
               { id: 34, title: "Шан-Чи и легенда десяти колец", voice_over: "Дубляж", duration: "2:12:33", director: "Дестин Дэниел Креттон", release_date: "2 сентября 2021 года", type: "Фильм" },
               { id: 35, title: "Вечные", voice_over: "Дубляж", duration: "2:36:05", director: "Хлоя Чжао", release_date: "4 ноября 2021 года", type: "Фильм" },
-              { id: 36, title: "Соколиный глаз", voice_over: "HDrezka Studio или Flarrow Films", duration: "6 серий (40-62 мин)", director: "Берт, Кэти Эллвуд, Риз Томас", release_date: "24 ноября 2021 года", type: "Сериал" },
+              { id: 36, title: "Соколиный глаз", voice_over: "HDrezka Studio или Flarrow Films", duration: "6 серий (40-62 мин)", director: "Берт, Кэти Эллвуд, Риз Томас", release_date: "24 ноября 2021 года", type: "Сериал", link_search_needed: true },
               { id: 37, title: "Человек-паук: Нет пути домой", voice_over: "Дубляж", duration: "2:28:09", director: "Джон Уоттс", release_date: "16 декабря 2021 года", type: "Фильм", notes: "Примечание: Перед просмотром данного фильма, обязательно стоит посмотреть подразделы «Человек-паук от Сэма Рэйми», «Новый Человек-паук от Марка Уэбба» и два фильма про Венома, которые находятся в разделе «Фильмы от Sony»." },
-              { id: 38, title: "Лунный Рыцарь 🌙", voice_over: "Red Head Sound", duration: "6 серий (44-53 мин)", director: "Джастин Бенсон, Мохамед Диаб, Аарон Мурхед", release_date: "30 марта 2022 года", type: "Сериал" }, // Добавлен эмодзи
+              { id: 38, title: "Лунный Рыцарь 🌙", voice_over: "Red Head Sound", duration: "6 серий (44-53 мин)", director: "Джастин Бенсон, Мохамед Диаб, Аарон Мурхед", release_date: "30 марта 2022 года", type: "Сериал", link_search_needed: true },
               { id: 39, title: "Доктор Стрэндж 2: В Мультивселенной безумия", voice_over: "Дубляж", duration: "2:06:31", director: "Сэм Рэйми", release_date: "4 мая 2022 года", type: "Фильм" },
-              { id: 40, title: "Мисс Марвел", voice_over: "Flarrow Films или Red Head Sound", duration: "6 серий (38-50 мин)", director: "Мира Менон, Билал Фалла, Шармин Обаид, Адиль Эль Арби", release_date: "8 июня 2022 года", type: "Сериал" },
+              { id: 40, title: "Мисс Марвел", voice_over: "Flarrow Films или Red Head Sound", duration: "6 серий (38-50 мин)", director: "Мира Менон, Билал Фалла, Шармин Обаид, Адиль Эль Арби", release_date: "8 июня 2022 года", type: "Сериал", link_search_needed: true },
               { id: 41, title: "Тор 4: Любовь и Гром", voice_over: "Дубляж", duration: "1:59:00", director: "Тайка Вайтити", release_date: "8 июля 2022 года", type: "Фильм" },
-              { id: 42, title: "Я есть Грут", voice_over: "Red Head Sound", duration: "5 серий (~4 мин)", director: "Кирстен Лепор", release_date: "10 августа 2022 года", type: "Анимационные короткометражки" },
-              { id: 43, title: "Женщина-Халк: Судебный адвокат", voice_over: "Red Head Sound", duration: "9 серий (30-38 мин)", director: "Кэт Койро, Ану Валиа", release_date: "17 августа 2022 года", type: "Сериал" },
-              { id: 44, title: "Ночной Оборотень", voice_over: "Red Head Sound", duration: "52:37", director: "Майкл Джаккино", release_date: "7 октября 2022 года", type: "Спецвыпуск" },
+              { id: 42, title: "Я есть Грут", voice_over: "Red Head Sound", duration: "5 серий (~4 мин)", director: "Кирстен Лепор", release_date: "10 августа 2022 года", type: "Анимационные короткометражки", link_search_needed: true },
+              { id: 43, title: "Женщина-Халк: Судебный адвокат", voice_over: "Red Head Sound", duration: "9 серий (30-38 мин)", director: "Кэт Койро, Ану Валиа", release_date: "17 августа 2022 года", type: "Сериал", link_search_needed: true },
+              { id: 44, title: "Ночной Оборотень", voice_over: "Red Head Sound", duration: "52:37", director: "Майкл Джаккино", release_date: "7 октября 2022 года", type: "Спецвыпуск", link_search_needed: true },
               { id: 45, title: "Чёрная пантера 2: Ваканда навеки", voice_over: "Дубляж", duration: "2:41:18", director: "Райан Куглер", release_date: "11 ноября 2022 года", type: "Фильм" },
-              { id: 46, title: "Стражи Галактики: Праздничный спецвыпуск", voice_over: "Red Head Sound", duration: "41:55", director: "Джеймс Ганн", release_date: "25 ноября 2022 года", type: "Спецвыпуск" }
+              { id: 46, title: "Стражи Галактики: Праздничный спецвыпуск", voice_over: "Red Head Sound", duration: "41:55", director: "Джеймс Ганн", release_date: "25 ноября 2022 года", type: "Спецвыпуск", link_search_needed: true }
             ]
           },
-          {
+           {
             phase: "Фаза 5",
             projects: [
-                { id: 47, title: "Человек-муравей и Оса: Квантомания", voice_over: "Дубляж или Read Head Sound", duration: "2:04:29", director: "Пейтон Рид", release_date: "17 февраля 2023 года", type: "Фильм" },
-                { id: 48, title: "Стражи Галактики. Часть 3", voice_over: "Дубляж или Read Head Sound", duration: "2:30:02", director: "Джеймс Ганн", release_date: "5 мая 2023 года", type: "Фильм" },
-                { id: 49, title: "Секретное вторжение", voice_over: "Red Head Sound", duration: "6 серий (38-58 мин)", director: "Томас Безуча, Али Селим", release_date: "21 июня 2023 года", type: "Сериал" },
-                { id: 50, title: "Локи (2 сезон)", voice_over: "Дубляж (HDrezka Studio) или Red Head Sound", duration: "6 серий (45-53 мин)", director: "Джастин Бенсон, Аарон Мурхед", release_date: "6 октября 2023 года", type: "Сериал" },
-                { id: 51, title: "Марвелы (Капитан Марвел 2)", voice_over: "Дубляж или Red Head Sound", duration: "1:44:38", director: "Ниа ДаКоста", release_date: "10 ноября 2023 года", type: "Фильм" },
-                { id: 52, title: "Что, если...? (2 сезон) ❔", voice_over: "HDrezka Studio или Flarrow Films", duration: "9 серий (30-37 мин)", director: "Брайан Эндрюс", release_date: "22 декабря 2023 года", type: "Анимационный сериал" }, // Добавлен эмодзи
-                { id: 53, title: "Эхо", voice_over: "Flarrow Films", duration: "5 серий (37-51 мин)", director: "Сидней Фриланд, Катриона МакКензи", release_date: "9 января 2024 года", type: "Сериал" },
+                { id: 47, title: "Человек-муравей и Оса: Квантомания", voice_over: "Дубляж или Read Head Sound", duration: "2:04:29", director: "Пейтон Рид", release_date: "17 февраля 2023 года", type: "Фильм", link_search_needed: true },
+                { id: 48, title: "Стражи Галактики. Часть 3", voice_over: "Дубляж или Read Head Sound", duration: "2:30:02", director: "Джеймс Ганн", release_date: "5 мая 2023 года", type: "Фильм", link_search_needed: true },
+                { id: 49, title: "Секретное вторжение", voice_over: "Red Head Sound", duration: "6 серий (38-58 мин)", director: "Томас Безуча, Али Селим", release_date: "21 июня 2023 года", type: "Сериал", link_search_needed: true },
+                { id: 50, title: "Локи (2 сезон)", voice_over: "Дубляж (HDrezka Studio) или Red Head Sound", duration: "6 серий (45-53 мин)", director: "Джастин Бенсон, Аарон Мурхед", release_date: "6 октября 2023 года", type: "Сериал", link_search_needed: true },
+                { id: 51, title: "Марвелы (Капитан Марвел 2)", voice_over: "Дубляж или Red Head Sound", duration: "1:44:38", director: "Ниа ДаКоста", release_date: "10 ноября 2023 года", type: "Фильм", link_search_needed: true },
+                { id: 52, title: "Что, если...? (2 сезон) ❔", voice_over: "HDrezka Studio или Flarrow Films", duration: "9 серий (30-37 мин)", director: "Брайан Эндрюс", release_date: "22 декабря 2023 года", type: "Анимационный сериал", link_search_needed: true },
+                { id: 53, title: "Эхо", voice_over: "Flarrow Films", duration: "5 серий (37-51 мин)", director: "Сидней Фриланд, Катриона МакКензи", release_date: "9 января 2024 года", type: "Сериал", link_search_needed: true },
                 { id: 54, title: "Дэдпул и Росомаха", voice_over: "Дубляж", duration: "?", director: "Шон Леви", release_date: "26 июля 2024 года", type: "Фильм", notes: "Примечание: Перед просмотром данного фильма, обязательно стоит посмотреть подраздел «Люди Икс (серия фильмов)» в разделе «Фильмы от Fox»." },
-                { id: 55, title: "Это всё Агата", voice_over: "HDrezka Studio", duration: "9 серий (29-49 мин)", director: "Жаклин Шеффер, Рэйчел Голдберг, Ганджа Монтейру", release_date: "18 сентября 2024 года", type: "Сериал" },
-                { id: 56, title: "Что, если...? (3 сезон) ❔", voice_over: "HDrezka Studio или Flarrow Films", duration: "8 серий (30-37 мин)", director: "Брайан Эндрюс, Стефан Франк", release_date: "22 декабря 2024 года", type: "Анимационный сериал" }, // Добавлен эмодзи
-                { id: 57, title: "Ваш дружелюбный сосед Человек-паук (1 сезон) 🕸️🎒", voice_over: "HDrezka Studio или Flarrow Films", duration: "10 серий (29-33 мин)", director: "Мельхиор Цвиер, Лиза Сингер", release_date: "29 января 2025 года", type: "Анимационный сериал" }, // Добавлены эмодзи
+                { id: 55, title: "Это всё Агата", voice_over: "HDrezka Studio", duration: "9 серий (29-49 мин)", director: "Жаклин Шеффер, Рэйчел Голдберг, Ганджа Монтейру", release_date: "18 сентября 2024 года", type: "Сериал", link_search_needed: true },
+                { id: 56, title: "Что, если...? (3 сезон) ❔", voice_over: "HDrezka Studio или Flarrow Films", duration: "8 серий (30-37 мин)", director: "Брайан Эндрюс, Стефан Франк", release_date: "22 декабря 2024 года", type: "Анимационный сериал", link_search_needed: true },
+                { id: 57, title: "Ваш дружелюбный сосед Человек-паук (1 сезон) 🕸️🎒", voice_over: "HDrezka Studio или Flarrow Films", duration: "10 серий (29-33 мин)", director: "Мельхиор Цвиер, Лиза Сингер", release_date: "29 января 2025 года", type: "Анимационный сериал", link_search_needed: true },
                 { id: 58, title: "Капитан Америка: Новый мир", voice_over: "Дубляж", duration: "1:59:37", director: "Джулиус Она", release_date: "14 февраля 2025 года", type: "Фильм" },
-                { id: 59, title: "Сорвиголова: Рождённый заново (1 сезон)", voice_over: "HDrezka Studio или Red Head Sound или Flarrow Films", duration: "9 серий (42-60 мин)", director: "Джеффри Начманофф, Майкл Куэста, Дэвид Бойд, Аарон Мурхед, Джастин Бенсон", release_date: "4 марта 2025 года", type: "Сериал", notes: "Примечание: Перед просмотром данного сериала, обязательно стоит посмотреть подраздел «Сериалы Netflix» в разделе «Сериалы Marvel Television»." },
-                { id: 60, title: "Громовержцы* ⚡", voice_over: "Дубляж", duration: "?", director: "Джейк Шрейер", release_date: "2 мая 2025 года", type: "Фильм" }, // Добавлен эмодзи
+                { id: 59, title: "Сорвиголова: Рождённый заново (1 сезон)", voice_over: "HDrezka Studio или Red Head Sound или Flarrow Films", duration: "9 серий (42-60 мин)", director: "Джеффри Начманофф, Майкл Куэста, Дэвид Бойд, Аарон Мурхед, Джастин Бенсон", release_date: "4 марта 2025 года", type: "Сериал", notes: "Примечание: Перед просмотром данного сериала, обязательно стоит посмотреть подраздел «Сериалы Netflix» в разделе «Сериалы Marvel Television».", link_search_needed: true },
+                { id: 60, title: "Громовержцы* ⚡", voice_over: "Дубляж", duration: "?", director: "Джейк Шрейер", release_date: "2 мая 2025 года", type: "Фильм" },
                 { id: 61, title: "Железное сердце", voice_over: "?", duration: "6 серий (?)", director: "Сэм Бэйли, Анджела Барнс", release_date: "24 июня 2025 года", type: "Сериал" },
                 { id: 62, title: "Фантастическая четвёрка: Первые шаги", voice_over: "Дубляж", duration: "?", director: "Мэтт Шекман", release_date: "25 июля 2025 года", type: "Фильм" }
             ]
           },
-          {
+           {
             phase: "Фаза 6",
             projects: [
                { id: 63, title: "Очи Ваканды", voice_over: "?", duration: "4 серии (?)", director: "Райан Куглер", release_date: "6 августа 2025 года", type: "Анимационный сериал" },
                { id: 64, title: "Зомби Marvel", voice_over: "?", duration: "4 серии (?)", director: "Брайан Эндрюс", release_date: "3 октября 2025 года", type: "Анимационный сериал" },
                { id: 65, title: "Чудо-человек", voice_over: "?", duration: "? серий", director: "Дестин Дэниел Креттон, Стелла Меги, Джеймс Понсольдт, Тиффани Джонсон", release_date: "Декабрь 2025 года", type: "Сериал" },
-               { id: 66, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "13 февраля 2026 года", type: "Фильм" }, // Добавлен эмодзи
+               { id: 66, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "13 февраля 2026 года", type: "Фильм" },
                { id: 67, title: "Сорвиголова: Рождённый заново (2 сезон)", voice_over: "?", duration: "8 серий (?)", director: "Аарон Мурхед, Джастин Бенсон", release_date: "Март 2026 года", type: "Сериал" },
                { id: 68, title: "Мстители: Судный день", voice_over: "Дубляж", duration: "?", director: "Энтони Руссо, Джо Руссо", release_date: "1 мая 2026 года", type: "Фильм" },
                { id: 69, title: "Человек-паук: Совершенно новый день", voice_over: "Дубляж", duration: "?", director: "Дестин Дэниел Креттон", release_date: "31 июля 2026 года", type: "Фильм" },
-               { id: 70, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "6 ноября 2026 года", type: "Фильм" }, // Добавлен эмодзи
+               { id: 70, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "6 ноября 2026 года", type: "Фильм" },
                { id: 71, title: "Квест Вижна", voice_over: "?", duration: "?", director: "Терри Маталас, Кристофер Дж. Бирн, Винченцо Натали", release_date: "2026 год", type: "Сериал" },
-               { id: 72, title: "Ваш дружелюбный сосед Человек-паук (2 сезон) 🕸️🎒", voice_over: "?", duration: "?", director: "?", release_date: "2026 год", type: "Анимационный сериал" }, // Добавлены эмодзи
-               { id: 73, title: "Безымянный спецвыпуск о Карателе 💀", voice_over: "?", duration: "?", director: "Рейнальдо Маркус Грин", release_date: "2026 год", type: "Спецвыпуск", notes: "Примечание: Перед просмотром данного проекта, обязательно стоит посмотреть подраздел «Сериалы Netflix» в разделе «Сериалы Marvel Television», также сериал «Сорвиголова: Рождённый заново» от Marvel Studios." }, // Добавлен эмодзи
-               { id: 74, title: "Мстители: Секретные войны 🏴💥", voice_over: "Дубляж", duration: "?", director: "Энтони Руссо, Джо Руссо", release_date: "7 мая 2027 года", type: "Фильм" } // Добавлены эмодзи
+               { id: 72, title: "Ваш дружелюбный сосед Человек-паук (2 сезон) 🕸️🎒", voice_over: "?", duration: "?", director: "?", release_date: "2026 год", type: "Анимационный сериал" },
+               { id: 73, title: "Безымянный спецвыпуск о Карателе 💀", voice_over: "?", duration: "?", director: "Рейнальдо Маркус Грин", release_date: "2026 год", type: "Спецвыпуск", notes: "Примечание: Перед просмотром данного проекта, обязательно стоит посмотреть подраздел «Сериалы Netflix» в разделе «Сериалы Marvel Television», также сериал «Сорвиголова: Рождённый заново» от Marvel Studios." },
+               { id: 74, title: "Мстители: Секретные войны 🏴‍☠️💥", voice_over: "Дубляж", duration: "?", director: "Энтони Руссо, Джо Руссо", release_date: "7 мая 2027 года", type: "Фильм" } // Заменен эмодзи
            ]
           }
         ]
       },
-      {
-        saga: "Неизвестная фаза", // Отдельная сага для неопределенных
+       {
+        saga: "Неизвестная фаза",
          groups: [
             {
-                phase: null, // Нет фазы
+                phase: null,
                 projects: [
-                    { id: 75, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "18 февраля 2028 года", type: "Фильм" }, // Добавлен эмодзи
-                    { id: 76, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "5 мая 2028 года", type: "Фильм" }, // Добавлен эмодзи
-                    { id: 77, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "10 ноября 2028 года", type: "Фильм" }, // Добавлен эмодзи
-                    { id: 78, title: "Блэйд 🦇🩸", voice_over: "?", duration: "?", director: "Бассам Тарик", release_date: "?", type: "Фильм" }, // Добавлены эмодзи
-                    { id: 79, title: "Ваш дружелюбный сосед Человек-паук (3 сезон) 🕸️🎒", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Анимационный сериал" }, // Добавлены эмодзи
-                    { id: 80, title: "Войны в доспехах 🎖️🤍", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Фильм" }, // Добавлены эмодзи
-                    { id: 81, title: "Неизвестный проект о Нове ❔🔆", voice_over: "?", duration: "? серий", director: "?", release_date: "?", type: "Сериал/Спецвыпуск" }, // Добавлены эмодзи
-                    { id: 82, title: "Неизвестный проект о Черной пантере 🐾🌄", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Проект" }, // Добавлены эмодзи
-                    { id: 83, title: "Неизвестный фильм о Шан-Чи ❔⭕", voice_over: "?", duration: "?", director: "Дестин Дэниел Креттон", release_date: "?", type: "Фильм" }, // Добавлены эмодзи
-                    { id: 84, title: "Неизвестный фильм о Вечных ❔♾️", voice_over: "?", duration: "?", director: "Хлоя Чжао", release_date: "?", type: "Фильм" }, // Добавлены эмодзи
-                    { id: 85, title: "Неизвестный фильм о Людях Икс ❔🙅", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Фильм" } // Добавлены эмодзи (примерный)
+                    { id: 75, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "18 февраля 2028 года", type: "Фильм" },
+                    { id: 76, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "5 мая 2028 года", type: "Фильм" },
+                    { id: 77, title: "Неизвестный фильм Marvel ❔", voice_over: "?", duration: "?", director: "?", release_date: "10 ноября 2028 года", type: "Фильм" },
+                    { id: 78, title: "Блэйд 🦇🩸", voice_over: "?", duration: "?", director: "Бассам Тарик", release_date: "?", type: "Фильм" },
+                    { id: 79, title: "Ваш дружелюбный сосед Человек-паук (3 сезон) 🕸️🎒", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Анимационный сериал" },
+                    { id: 80, title: "Войны в доспехах 🎖️🛡️", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Фильм" }, // Заменен эмодзи
+                    { id: 81, title: "Неизвестный проект о Нове ❔🌟", voice_over: "?", duration: "? серий", director: "?", release_date: "?", type: "Сериал/Спецвыпуск" }, // Заменен эмодзи
+                    { id: 82, title: "Неизвестный проект о Черной пантере 🐾👑", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Проект" }, // Заменен эмодзи
+                    { id: 83, title: "Неизвестный фильм о Шан-Чи ❔⭕", voice_over: "?", duration: "?", director: "Дестин Дэниел Креттон", release_date: "?", type: "Фильм" },
+                    { id: 84, title: "Неизвестный фильм о Вечных ❔♾️", voice_over: "?", duration: "?", director: "Хлоя Чжао", release_date: "?", type: "Фильм" },
+                    { id: 85, title: "Неизвестный фильм о Людях Икс ❔✖️", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "Фильм" } // Заменен эмодзи
                 ]
             }
          ]
       },
-      // --- Дополнительно ---
-      // Структура Дополнительно не меняется, так как там нет Саг и Фаз в том же виде
+       // --- Дополнительно ---
       {
-        section: "Дополнительно", // Используем section для группировки Дополнительно
-        groups: [ // Группируем подразделы Дополнительно
+        section: "Дополнительно",
+        groups: [
             {
                 subgroup: "Сериалы Marvel Television",
                 projects: [
@@ -150,13 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 88, title: "Агенты «Щ.И.Т.»: Йо-Йо", voice_over: "LostFilm", duration: "6 серий (4-6 мин)", director: "Крис Шерами, Джон П. Гордон, Mark Kolpack, Феликс Парнелл", release_date: "13 декабря 2016 года", type: "Веб-сериал" },
                     { id: 89, title: "Сверхлюди / Нелюди", voice_over: "LostFilm", duration: "8 серий (42 мин)", director: "Крис Фишер, Роэль Рейн, Билл Джирхарт, Neasa Hardiman", release_date: "31 августа 2017 года", type: "Сериал" },
                     { subgroup_title: "Сериалы Netflix", id: 90, title: "Сорвиголова", voice_over: "LostFilm", duration: "3 сезона, 39 серий (48-60 мин)", director: "Фил Абрахам, Стивен Серджик, Питер Хор", release_date: "2 апреля 2015 года", type: "Сериал" },
-                    { id: 91, title: "Джессика Джонс", voice_over: "HDrezka Studio", duration: "3 сезона, 39 серий (48–60 мин)", director: "Стивен Серджик, Дженнифер Гетцингер, Ута Бризвитц, Розмари Родригез", release_date: "10 октября 2015 года", type: "Сериал" },
+                    { id: 91, title: "Джессика Джонс", voice_over: "HDrezka Studio", duration: "3 сезона, 39 серий (48–60 мин)", director: "Стивен Серджик, Дженнифер Гетцингер, Ута Бризвитц, Розмари Родригез", release_date: "10 октября 2015 года", type: "Сериал", link_search_needed: true },
                     { id: 92, title: "Люк Кейдж", voice_over: "LostFilm", duration: "2 сезона, 26 серий (48-60 мин)", director: "Энди Годдард, Марк Йобст, Кларк Джонсон, Стивен Серджик", release_date: "28 сентября 2016 года", type: "Сериал" },
-                    { id: 93, title: "Железный кулак", voice_over: "HDrezka Studio", duration: "2 сезона, 23 серии (48-60 мин)", director: "Стивен Серджик, Джон Дал, Фэррен Блэкберн, Ута Бризвитц", release_date: "15 марта 2017 года", type: "Сериал" },
+                    { id: 93, title: "Железный кулак", voice_over: "HDrezka Studio", duration: "2 сезона, 23 серии (48-60 мин)", director: "Стивен Серджик, Джон Дал, Фэррен Блэкберн, Ута Бризвитц", release_date: "15 марта 2017 года", type: "Сериал", link_search_needed: true },
                     { id: 94, title: "Защитники", voice_over: "LostFilm", duration: "8 серий (48-60 мин)", director: "С.Дж. Кларксон, Фил Абрахам, Фэррен Блэкберн, Ута Бризвитц", release_date: "22 июля 2017 года", type: "Сериал" },
                     { id: 95, title: "Каратель", voice_over: "LostFilm", duration: "2 сезона, 26 серий (48-65 мин)", director: "Джим О’Хенлон, Джереми Уэбб, Джет Уилкинсон, Энди Годдард", release_date: "6 ноября 2017 года", type: "Сериал" },
                     { subgroup_title: "Сериалы HULU", id: 96, title: "Беглецы", voice_over: "LostFilm", duration: "3 сезона, 33 серии (42-53 мин)", director: "Рэмси Никелл, Джереми Уэбб, Джеффри В. Бёрд, Патрик Р. Норрис", release_date: "7 октября 2017 года", type: "Сериал" },
-                    { id: 97, title: "Хелстром", voice_over: "HDrezka Studio", duration: "10 серий (44-55 мин)", director: "Сэнфорд Букставер, Андерс Энгстрем, Чери Ноулан, Джим О’Хенлон", release_date: "16 ноября 2020 года", type: "Сериал" },
+                    { id: 97, title: "Хелстром", voice_over: "HDrezka Studio", duration: "10 серий (44-55 мин)", director: "Сэнфорд Букставер, Андерс Энгстрем, Чери Ноулан, Джим О’Хенлон", release_date: "16 ноября 2020 года", type: "Сериал", link_search_needed: true },
                     { subgroup_title: "Сериалы Freeform", id: 98, title: "Плащ и Кинжал", voice_over: "LostFilm", duration: "2 сезона, 20 серий (42-49 мин)", director: "Эми Канаан Манн, Дженнифер Фанг, Джефф Вулнаф, Алекс Гарсиа Лопес", release_date: "8 июня 2018 года", type: "Сериал" },
                 ]
             },
@@ -179,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 112, title: "Зловещая шестёрка", voice_over: "Дубляж", duration: "?", director: "?", release_date: "?", type: "Фильм" }
                 ]
             },
-            {
+             {
                 subgroup: "Фильмы от Fox",
                  projects: [
                     { subgroup_title: "Люди Икс (серия фильмов)", id: 113, title: "Люди Икс", voice_over: "Дубляж", duration: "1:44:20", director: "Брайан Сингер", release_date: "12 июля 2000 года", type: "Фильм" },
@@ -193,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 121, title: "Люди Икс: Апокалипсис", voice_over: "Дубляж", duration: "2:23:56", director: "Брайан Сингер", release_date: "9 мая 2016 года", type: "Фильм" },
                     { id: 122, title: "Легион", voice_over: "Фокс (Fox)", duration: "3 сезона, 27 серий (47-68 мин)", director: "Джон Камерон, Ноа Хоули, Тим Милантс, Майкл Аппендаль", release_date: "9 февраля 2017 года", type: "Сериал" },
                     { id: 123, title: "Логан", voice_over: "Дубляж или Дубляж (реж. версия)", duration: "2:17:23", director: "Джеймс Мэнголд", release_date: "17 февраля 2017 года", type: "Фильм" },
-                    { id: 124, title: "Одаренные", voice_over: "Фокс (Fox) или HDrezka Studio и 13 серию 1 сезона от LostFilm", duration: "2 сезона, 29 серий (47-68 мин)", director: "Скотт Питерс, Стивен Серджик, Роберт Данкан МакНил, Стивен ДеПол", release_date: "3 октября 2017 года", type: "Сериал" },
+                    { id: 124, title: "Одаренные", voice_over: "Фокс (Fox) или HDrezka Studio и 13 серию 1 сезона от LostFilm", duration: "2 сезона, 29 серий (47-68 мин)", director: "Скотт Питерс, Стивен Серджик, Роберт Данкан МакНил, Стивен ДеПол", release_date: "3 октября 2017 года", type: "Сериал", link_search_needed: true },
                     { id: 125, title: "Дэдпул 2", voice_over: "Дубляж или Дубляж (реж. версия)", duration: "2:14:09", director: "Дэвид Литч", release_date: "1 мая 2018 года", type: "Фильм" },
                     { id: 126, title: "Люди Икс: Тёмный Феникс", voice_over: "Дубляж", duration: "1:53:56", director: "Саймон Кинберг", release_date: "5 июня 2019 года", type: "Фильм" },
                     { id: 127, title: "Новые мутанты", voice_over: "Дубляж", duration: "1:34:03", director: "Джош Бун", release_date: "26 августа 2020 года", type: "Фильм" },
@@ -203,29 +202,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 131, title: "Фантастическая четверка (2015)", voice_over: "Дубляж", duration: "1:39:58", director: "Джош Транк", release_date: "4 августа 2015 года", type: "Фильм", notes: "Примечание: Перезапуск, основан на Ultimate Fantastic Four. Плохо принят критиками, провалился в прокате." }
                 ]
             },
-            {
+             {
                 subgroup: "Анимационные фильмы и сериалы",
                 projects: [
                     { subgroup_title: "Театральные", id: 132, title: "Город героев", voice_over: "Дубляж", duration: "1:41:52", director: "Дон Холл, Крис Уильямс", release_date: "23 октября 2014 года", type: "Анимационный фильм", studio: "Walt Disney Animation Studios" },
                     { id: 133, title: "Человек-паук: Через вселенные", voice_over: "Дубляж", duration: "1:56:50", director: "Боб Персичетти, Питер Рэмзи, Родни Ротман", release_date: "6 декабря 2018 года", type: "Анимационный фильм", studio: "Sony Pictures Animation" },
-                    { id: 134, title: "Человек-паук: Паутина Вселенных", voice_over: "Дубляж или Read Head Sound", duration: "2:20:05", director: "Хоаким Дос Сантос, Кэмп Пауэрс, Джастин К. Томпсон", release_date: "2 июня 2023 года", type: "Анимационный фильм", studio: "Sony Pictures Animation", notes: "Примечание: После просмотра данной картины можете посмотреть короткометражку «Паук внутри: История паучьей Вселенной»...", link: null }, // link: null если не найдена прямая
+                    { id: 134, title: "Человек-паук: Паутина Вселенных", voice_over: "Дубляж или Read Head Sound", duration: "2:20:05", director: "Хоаким Дос Сантос, Кэмп Пауэрс, Джастин К. Томпсон", release_date: "2 июня 2023 года", type: "Анимационный фильм", studio: "Sony Pictures Animation", notes: "Примечание: После просмотра данной картины можете посмотреть короткометражку «Паук внутри: История паучьей Вселенной»...", link: null, link_search_needed: true },
                     { id: 135, title: "Человек-паук: За пределами вселенных", voice_over: "Дубляж", duration: "?", director: "Хоаким Дос Сантос, Кэмп Пауэрс, Джастин К. Томпсон", release_date: "?", type: "Анимационный фильм", studio: "Sony Pictures Animation" },
-                    { subgroup_title: "Телевизионные", id: 136, title: "Дракула: Повелитель проклятых", voice_over: "?", duration: "1 ч. 34 мин.", director: "Минору Окадзаки", release_date: "19 августа 1980 года", type: "Анимационный фильм", studio: "Toei Animation", notes: "Примечание: Нет на HDrezka, искать на YouTube (англ.).", link: null }, // Указание искать на YT не = ссылка
-                    { id: 137, title: "Чудовище Франкенштейн", voice_over: "?", duration: "1 ч. 38 мин.", director: "Юго Сэрикава, Тоёо Асида", release_date: "27 июля 1981 года", type: "Анимационный фильм", studio: "Toei Animation", notes: "Примечание: Нет на HDrezka, искать на YouTube (англ.).", link: null }, // Указание искать на YT не = ссылка
-                    { id: 138, title: "Новые Мстители", voice_over: "Flarrow Films", duration: "1:11:21", director: "Курт Геда, Стивен Е. Гордон, Боб Ричардсон", release_date: "21 февраля 2006 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Первый фильм в серии «Marvel Animated Features»." },
-                    { id: 139, title: "Несокрушимые Мстители / Новые Мстители 2", voice_over: "Flarrow Films", duration: "1:12:47", director: "Уилл Меньот, Дик Сэбаст, Боб Ричардсон", release_date: "2 июля 2006 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Второй фильм в серии «Marvel Animated Features»." },
-                    { id: 140, title: "Несокрушимый Железный человек", voice_over: "Flarrow Films", duration: "1:23:03", director: "Патрик Арчибальд, Джей Олива, Фрэнк Пор", release_date: "23 января 2007 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Третий фильм в серии «Marvel Animated Features»." },
-                    { id: 141, title: "Доктор Стрэндж и Тайна Ордена магов", voice_over: "Flarrow Films", duration: "1:16:26", director: "Патрик Арчибальд, Джей Олива, Фрэнк Пор, Дик Сэбаст", release_date: "14 августа 2007 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Четвёртый фильм в серии «Marvel Animated Features»." },
-                    { id: 142, title: "Новые Мстители: Герои завтрашнего дня", voice_over: "Flarrow Films", duration: "1:18:03", director: "Джей Олива, Гари Хартл", release_date: "2 сентября 2008 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation", notes: "Примечание: Пятый фильм в серии «Marvel Animated Features»." },
+                    { subgroup_title: "Телевизионные", id: 136, title: "Дракула: Повелитель проклятых", voice_over: "?", duration: "1 ч. 34 мин.", director: "Минору Окадзаки", release_date: "19 августа 1980 года", type: "Анимационный фильм", studio: "Toei Animation", notes: "Примечание: Нет на HDrezka, искать на YouTube (англ.).", link: null },
+                    { id: 137, title: "Чудовище Франкенштейн", voice_over: "?", duration: "1 ч. 38 мин.", director: "Юго Сэрикава, Тоёо Асида", release_date: "27 июля 1981 года", type: "Анимационный фильм", studio: "Toei Animation", notes: "Примечание: Нет на HDrezka, искать на YouTube (англ.).", link: null },
+                    { id: 138, title: "Новые Мстители", voice_over: "Flarrow Films", duration: "1:11:21", director: "Курт Геда, Стивен Е. Гордон, Боб Ричардсон", release_date: "21 февраля 2006 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Первый фильм в серии «Marvel Animated Features».", link_search_needed: true },
+                    { id: 139, title: "Несокрушимые Мстители / Новые Мстители 2", voice_over: "Flarrow Films", duration: "1:12:47", director: "Уилл Меньот, Дик Сэбаст, Боб Ричардсон", release_date: "2 июля 2006 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Второй фильм в серии «Marvel Animated Features».", link_search_needed: true },
+                    { id: 140, title: "Несокрушимый Железный человек", voice_over: "Flarrow Films", duration: "1:23:03", director: "Патрик Арчибальд, Джей Олива, Фрэнк Пор", release_date: "23 января 2007 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Третий фильм в серии «Marvel Animated Features».", link_search_needed: true },
+                    { id: 141, title: "Доктор Стрэндж и Тайна Ордена магов", voice_over: "Flarrow Films", duration: "1:16:26", director: "Патрик Арчибальд, Джей Олива, Фрэнк Пор, Дик Сэбаст", release_date: "14 августа 2007 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Studios", notes: "Примечание: Четвёртый фильм в серии «Marvel Animated Features».", link_search_needed: true },
+                    { id: 142, title: "Новые Мстители: Герои завтрашнего дня", voice_over: "Flarrow Films", duration: "1:18:03", director: "Джей Олива, Гари Хартл", release_date: "2 сентября 2008 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation", notes: "Примечание: Пятый фильм в серии «Marvel Animated Features».", link_search_needed: true },
                     { id: 143, title: "Халк против…", voice_over: "Многоголосый закадровый", duration: "1:22:30", director: "Сэм Лью, Фрэнк Пор", release_date: "27 января 2009 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation, Madhouse", notes: "Примечание: Состоит из «Халк против Тора» и «Халк против Росомахи». Шестой фильм в серии «Marvel Animated Features»." },
-                    { id: 144, title: "Планета Халка", voice_over: "Flarrow Films", duration: "1:21:07", director: "Сэм Лью", release_date: "2 февраля 2010 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation, Madhouse", notes: "Примечание: Седьмой фильм в серии «Marvel Animated Features»." },
-                    { id: 145, title: "Тор: Сказания Асгарда", voice_over: "Flarrow Films", duration: "1:16:57", director: "Сэм Лью", release_date: "11 мая 2011 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation, Madhouse, Lions Gate Entertainment", notes: "Примечание: Восьмой и финальный фильм в серии «Marvel Animated Features»." },
-                    { id: 146, title: "Железный Человек: Восстание Техновора", voice_over: "Flarrow Films", duration: "1:28:04", director: "Хироси Хамасаки", release_date: "9 апреля 2013 года", type: "Анимационный фильм", studio: "Marvel Entertainment, Madhouse" },
+                    { id: 144, title: "Планета Халка", voice_over: "Flarrow Films", duration: "1:21:07", director: "Сэм Лью", release_date: "2 февраля 2010 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation, Madhouse", notes: "Примечание: Седьмой фильм в серии «Marvel Animated Features».", link_search_needed: true },
+                    { id: 145, title: "Тор: Сказания Асгарда", voice_over: "Flarrow Films", duration: "1:16:57", director: "Сэм Лью", release_date: "11 мая 2011 года", type: "Анимационный фильм", studio: "MLG Productions, Marvel Animation, Madhouse, Lions Gate Entertainment", notes: "Примечание: Восьмой и финальный фильм в серии «Marvel Animated Features».", link_search_needed: true },
+                    { id: 146, title: "Железный Человек: Восстание Техновора", voice_over: "Flarrow Films", duration: "1:28:04", director: "Хироси Хамасаки", release_date: "9 апреля 2013 года", type: "Анимационный фильм", studio: "Marvel Entertainment, Madhouse", link_search_needed: true },
                     { id: 147, title: "Железный человек и Халк: Союз героев", voice_over: "Дубляж", duration: "1:11:44", director: "Эрик Радомски, Лео Райли", release_date: "3 декабря 2013 года", type: "Анимационный фильм", studio: "Marvel Animation, Brain Zoo Studios", notes: "Примечание: Первый мультфильм в серии «Heroes United»." },
-                    { id: 148, title: "Секретные материалы Мстителей: Чёрная Вдова и Каратель", voice_over: "Flarrow Films", duration: "1:22:42", director: "Кэнъити Симидзу", release_date: "11 марта 2014 года", type: "Анимационный фильм", studio: "Marvel Entertainment, Madhouse" },
+                    { id: 148, title: "Секретные материалы Мстителей: Чёрная Вдова и Каратель", voice_over: "Flarrow Films", duration: "1:22:42", director: "Кэнъити Симидзу", release_date: "11 марта 2014 года", type: "Анимационный фильм", studio: "Marvel Entertainment, Madhouse", link_search_needed: true },
                     { id: 149, title: "Железный человек и Капитан Америка: Союз героев", voice_over: "Дубляж", duration: "1:10:56", director: "Эрик Радомски, Лео Райли", release_date: "29 июля 2014 года", type: "Анимационный фильм", studio: "Marvel Animation", notes: "Примечание: Второй, финальный мультфильм в серии «Heroes United». Первый фильм Marvel Animation, снятый собственной студией." },
                     { id: 150, title: "Приключения Супергероев: Морозный Бой", voice_over: "Двухголосый закадровый", duration: "1:13:58", director: "Эрик Радомски, Митч Шауэр", release_date: "11 декабря 2015 года", type: "Анимационный фильм", studio: "Marvel Animation, Marvel Entertainment, The Walt Disney Company" },
-                    { id: 151, title: "Халк: Где обитают чудовища", voice_over: "Flarrow Films", duration: "1:15:14", director: "Эрик Радомски, Митч Шауэр", release_date: "9 октября 2016 года", type: "Анимационный фильм", studio: "Marvel Animation" },
+                    { id: 151, title: "Халк: Где обитают чудовища", voice_over: "Flarrow Films", duration: "1:15:14", director: "Эрик Радомски, Митч Шауэр", release_date: "9 октября 2016 года", type: "Анимационный фильм", studio: "Marvel Animation", link_search_needed: true },
                     { id: 152, title: "Восход Marvel: Тайные воины", voice_over: "Дубляж", duration: "1:20:28", director: "Альфред Гимено, Эрик Радомски", release_date: "30 сентября 2018 года", type: "Анимационный фильм", studio: "Marvel Animation", notes: "Примечание: Второй фильм в серии «Восход Marvel»." },
                     { subgroup_title: "Короткометражные", id: 153, title: "Супергерои Marvel 4D (Лондон)", voice_over: "?", duration: "9 минут", director: "Джошуа Уэкслер", release_date: "30 мая 2010 года", type: "4D Короткометражка", studio: "Marvel Entertainment, Threshold Animation Studios", notes: "Примечание: 4D фильм в Музее мадам Тюссо, Лондон." },
                     { id: 154, title: "Супергерои Marvel 4D (Нью-Йорк)", voice_over: "?", duration: "8 минут", director: "Джошуа Уэкслер", release_date: "26 апреля 2012 года", type: "4D Короткометражка", studio: "Marvel Entertainment, Threshold Animation Studios", notes: "Примечание: Обновлённая 4D версия в Музее мадам Тюссо, Нью-Йорк." },
@@ -233,23 +232,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 156, title: "Супергерои Marvel 4D: Битва Мстителей на Бали (Бали)", voice_over: "?", duration: "?", director: "?", release_date: "22 ноября 2013 года", type: "4D Короткометражка", studio: "Marvel Entertainment, Threshold Animation Studios", notes: "Примечание: Другая версия 4D фильма в Музее мадам Тюссо, Бали." },
                     { id: 157, title: "Супергерои Marvel 4D (Сингапур)", voice_over: "?", duration: "?", director: "?", release_date: "14 декабря 2017 года", type: "4D Короткометражка", studio: "Marvel Entertainment, Threshold Animation Studios", notes: "Примечание: Версия как в Нью-Йорке, в Музее мадам Тюссо, Сингапур." },
                     { id: 158, title: "Восход Marvel: Инициация", voice_over: "Колдфильм (Coldfilm)", duration: "24:46 (6x~4 мин)", director: "Альфред Гимено", release_date: "13 августа 2018 года", type: "Анимационная короткометражка (серия)", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Первый фильм в серии «Восход Marvel». Серия из 6 короткометражек." },
-                    { id: 159, title: "Восход Marvel: В погоне за призраками", voice_over: "?", duration: "21:57", director: "Альфред Гимено", release_date: "16 января 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Третий фильм в серии «Восход Marvel». Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link:"https://www.youtube.com/watch?v=zfSXc9a90jI" }, // Примерная ссылка, если бы она была в PDF
-                    { id: 160, title: "Застрявший в ветчине", voice_over: "?", duration: "4:02", director: "Мигель Джирон", release_date: "19 марта 2019 года", type: "Анимационная короткометражка", studio: "Sony Pictures Animation, Marvel Entertainment, Titmouse", notes: "Примечание: Приквел к «Человек-паук: Через вселенные». Нет на HDrezka, ссылка на Marvel HQ YouTube.", link:"https://www.youtube.com/watch?v=g0wbfjB7RgE" }, // Примерная ссылка
-                    { id: 161, title: "Восход Marvel: Железное сердце", voice_over: "?", duration: "43:57", director: "Сол Чой, Альфред Гимено", release_date: "31 марта 2019", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Четвёртый фильм в серии «Восход Marvel». Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link:"https://www.youtube.com/watch?v=cJz4czL315U"}, // Примерная ссылка
-                    { id: 162, title: "Восход Marvel: Битва групп", voice_over: "?", duration: "21:55", director: "Крис Рутковски", release_date: "28 августа 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Пятый фильм в серии «Восход Marvel».", link: "https://www.youtube.com/watch?v=sWYVHqfHj3I" }, // Примерная ссылка
+                    { id: 159, title: "Восход Marvel: В погоне за призраками", voice_over: "?", duration: "21:57", director: "Альфред Гимено", release_date: "16 января 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Третий фильм в серии «Восход Marvel». Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link:"https://www.youtube.com/watch?v=zfSXc9a90jI" },
+                    { id: 160, title: "Застрявший в ветчине", voice_over: "?", duration: "4:02", director: "Мигель Джирон", release_date: "19 марта 2019 года", type: "Анимационная короткометражка", studio: "Sony Pictures Animation, Marvel Entertainment, Titmouse", notes: "Примечание: Приквел к «Человек-паук: Через вселенные». Нет на HDrezka, ссылка на Marvel HQ YouTube.", link:"https://www.youtube.com/watch?v=g0wbfjB7RgE" },
+                    { id: 161, title: "Восход Marvel: Железное сердце", voice_over: "?", duration: "43:57", director: "Сол Чой, Альфред Гимено", release_date: "31 марта 2019", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Четвёртый фильм в серии «Восход Marvel». Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link:"https://www.youtube.com/watch?v=cJz4czL315U"},
+                    { id: 162, title: "Восход Marvel: Битва групп", voice_over: "?", duration: "21:55", director: "Крис Рутковски", release_date: "28 августа 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Пятый фильм в серии «Восход Marvel».", link: "https://www.youtube.com/watch?v=sWYVHqfHj3I" },
                     { id: 163, title: "Восход Marvel: Операция Шури", voice_over: "Многоголосый закадровый", duration: "21:59", director: "Крис Рутковски, Эрик Радомски", release_date: "11 октября 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Шестой фильм в серии «Восход Marvel»." },
-                    { id: 164, title: "Восход Marvel: Игра с огнём", voice_over: "?", duration: "43:56", director: "Сол Чой, Эрик Радомски", release_date: "18 декабря 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Седьмой и финальный фильм в серии «Восход Marvel». Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link: "https://www.youtube.com/watch?v=vRLGh4qN4sE" }, // Примерная ссылка
+                    { id: 164, title: "Восход Marvel: Игра с огнём", voice_over: "?", duration: "43:56", director: "Сол Чой, Эрик Радомски", release_date: "18 декабря 2019 года", type: "Анимационная короткометражка", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Седьмой и финальный фильм в серии «Восход Marvel». Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link: "https://www.youtube.com/watch?v=vRLGh4qN4sE" },
                     { id: 165, title: "Marvel Rising: Ultimate Comics", voice_over: "?", duration: "6:48–6:57", director: "?", release_date: "20 февраля 2019 года", type: "Анимационный комикс", studio: "Marvel Animation / Marvel Entertainment", notes: "Примечание: Анимированные комиксы, не фильм. Нет на кино-сервисах." },
                     { subgroup_title: "LEGO", id: 166, title: "LEGO Супергерои Marvel: Максимальная перегрузка", voice_over: "Дубляж", duration: "22:11", director: "Грег Ричардсон", release_date: "5 ноября 2013 года", type: "LEGO Спецвыпуск", studio: "Arc Productions, Marvel Entertainment" },
                     { id: 167, title: "LEGO Супергерои Marvel: Мстители. Снова в сборе", voice_over: "Дубляж", duration: "22:27", director: "Роб Сильвестри", release_date: "16 ноября 2015 года", type: "LEGO Спецвыпуск", studio: "Arc Productions, Marvel Entertainment" },
                     { id: 168, title: "LEGO Супергерои Marvel: Стражи Галактики", voice_over: "Дубляж", duration: "22:23", director: "Майкл Д. Блэк", release_date: "24 ноября 2017 года", type: "LEGO Спецвыпуск", studio: "Marvel Entertainment, Pure Imagination Studios, The LEGO Group" },
                     { id: 169, title: "LEGO Супергерои Marvel: Черная пантера", voice_over: "Дубляж", duration: "22:27", director: "Майкл Д. Блэк", release_date: "4 июня 2018 года", type: "LEGO Спецвыпуск", studio: "Marvel Entertainment, Pure Imagination Studios, The LEGO Group" },
                     { id: 170, title: "LEGO Marvel Человек-Паук: Одержимый Веномом", voice_over: "Любительский", duration: "22:05", director: "Кен Каннингэм, Эндрю Дункан", release_date: "3 августа 2019 года", type: "LEGO Спецвыпуск", studio: "Marvel Animation, The LEGO Group" },
-                    { id: 171, title: "LEGO Marvel Мстители: Климатический Парадокс", voice_over: "?", duration: "4 серии (~22 мин)", director: "Кен Каннингэм", release_date: "1 августа 2020 года", type: "LEGO Сериал", studio: "Marvel Studios, Atomic Cartoons, The LEGO Group", notes: "Примечание: Нет на HDrezka, ссылки на LEGO YouTube (4 серии).", link: "https://www.youtube.com/playlist?list=PLRNbTEZ7dhL0A0uJPnp50WKoSCKEsOP5q" }, // Примерная ссылка на плейлист
-                    { id: 172, title: "LEGO Marvel Мстители: Локи на тренировке", voice_over: "?", duration: "22 мин.", director: "?", release_date: "22 ноября 2021 года", type: "LEGO Спецвыпуск", studio: "Marvel Entertainment, The LEGO Group", notes: "Примечание: Нет на HDrezka, ссылка на Disney Now (может требовать VPN).", link: "https://disneynow.com/shows/lego-marvel-avengers-loki-in-training" }, // Примерная ссылка
-                    { id: 173, title: "LEGO Marvel Мстители: Искривлённое время", voice_over: "?", duration: "22:11", director: "Кен Каннингэм", release_date: "17 января 2022 года", type: "LEGO Спецвыпуск", studio: "Marvel Entertainment, The LEGO Group", notes: "Примечание: Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link: "https://www.youtube.com/watch?v=3-Q8oGocc98"}, // Примерная ссылка
+                    { id: 171, title: "LEGO Marvel Мстители: Климатический Парадокс", voice_over: "?", duration: "4 серии (~22 мин)", director: "Кен Каннингэм", release_date: "1 августа 2020 года", type: "LEGO Сериал", studio: "Marvel Studios, Atomic Cartoons, The LEGO Group", notes: "Примечание: Нет на HDrezka, ссылки на LEGO YouTube (4 серии).", link: "https://www.youtube.com/playlist?list=PLRNbTEZ7dhL0A0uJPnp50WKoSCKEsOP5q" }, // Убрана специфичная ссылка
+                    { id: 172, title: "LEGO Marvel Мстители: Локи на тренировке", voice_over: "?", duration: "22 мин.", director: "?", release_date: "22 ноября 2021 года", type: "LEGO Спецвыпуск", studio: "Marvel Entertainment, The LEGO Group", notes: "Примечание: Нет на HDrezka, ссылка на Disney Now (может требовать VPN).", link: null }, // Убрана ссылка Disney Now
+                    { id: 173, title: "LEGO Marvel Мстители: Искривлённое время", voice_over: "?", duration: "22:11", director: "Кен Каннингэм", release_date: "17 января 2022 года", type: "LEGO Спецвыпуск", studio: "Marvel Entertainment, The LEGO Group", notes: "Примечание: Нет на HDrezka, ссылка на Marvel HQ YouTube (может быть недоступно).", link: "https://www.youtube.com/watch?v=3-Q8oGocc98"},
                     { id: 174, title: "LEGO Marvel Человек-Паук", voice_over: "?", duration: "?", director: "?", release_date: "?", type: "LEGO Спецвыпуск", studio: "Alberto McCheezdip Studios, Dneail, Puzzle Entertainment" }
-                ]
+                 ]
              }
          ]
       }
@@ -274,9 +273,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDuration = document.getElementById('modal-duration');
     const modalDirector = document.getElementById('modal-director');
     const modalVoiceOver = document.getElementById('modal-voice-over');
-    const modalRatings = document.getElementById('modal-ratings');
+    const modalImdbRating = document.getElementById('modal-imdb'); // Отдельно для IMDb
+    const modalKinopoiskRating = document.getElementById('modal-kinopoisk'); // Отдельно для Кинопоиска
     const modalLinkContainer = document.getElementById('modal-link-container');
     const modalLink = document.getElementById('modal-link');
+    const modalLinkDisclaimer = document.getElementById('modal-link-disclaimer');
     const modalNotes = document.getElementById('modal-notes');
     const closeModalButton = modal.querySelector('.close-button');
 
@@ -284,41 +285,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Функции ---
 
-    // Генерация ID для заголовков (для прокрутки)
-    function generateId(text) {
-        return text ? text.toLowerCase().replace(/[^a-z0-9]+/g, '-') : `item-${Math.random().toString(36).substr(2, 9)}`;
+     // Генерация ID для заголовков (более надежная)
+    function generateId(text, type, index) {
+        // Используем тип и индекс для большей уникальности
+        const base = text ? text.toLowerCase().replace(/[^a-z0-9а-яё]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') : type;
+        return `${type}-${base}-${index}`;
     }
+
 
      // Функция для рендеринга списка проектов и навигации
     function renderProjectListAndNav(data) {
         projectListContainer.innerHTML = '';
-        navLinksContainer.innerHTML = ''; // Очищаем навигацию
+        navLinksContainer.innerHTML = '';
+        let sectionIndex = 0;
+        let groupIndex = 0;
+        let subgroupIndex = 0;
+
 
         data.forEach(sectionData => {
-            const sectionId = generateId(sectionData.saga || sectionData.section);
+            const sectionId = generateId(sectionData.saga || sectionData.section, 'section', sectionIndex++);
+            let isSectionHeaderAdded = false; // Флаг, чтобы добавить заголовок саги/секции только один раз
 
-            // Добавляем заголовок Саги/Секции (только один раз для саги)
-            if (sectionData.saga || sectionData.section) {
-                 const sectionHeader = document.createElement('h2');
-                 sectionHeader.classList.add('section-header');
-                 sectionHeader.textContent = sectionData.saga || sectionData.section;
-                 sectionHeader.id = sectionId;
-                 projectListContainer.appendChild(sectionHeader);
-
-                 // Добавляем ссылку в навигацию
-                 const navItem = document.createElement('li');
-                 const navLink = document.createElement('a');
-                 navLink.href = `#${sectionId}`;
-                 navLink.textContent = sectionData.saga || sectionData.section;
-                 navLink.classList.add('section-link');
-                 navItem.appendChild(navLink);
-                 navLinksContainer.appendChild(navItem);
-            }
-
-             // Проходим по группам (фазы или подразделы)
+            // Проходим по группам (фазы или подразделы)
             sectionData.groups.forEach(group => {
-                const groupId = generateId(group.phase || group.subgroup);
-                let currentSubgroupTitle = null;
+                 const groupId = generateId(group.phase || group.subgroup, 'group', groupIndex++);
+                 let currentSubgroupTitle = null;
+
+                 // Добавляем заголовок Саги/Секции (только если он еще не добавлен для этой секции)
+                 if (!isSectionHeaderAdded && (sectionData.saga || sectionData.section)) {
+                      const sectionHeader = document.createElement('h2');
+                      sectionHeader.classList.add('section-header');
+                      sectionHeader.textContent = sectionData.saga || sectionData.section;
+                      sectionHeader.id = sectionId;
+                      projectListContainer.appendChild(sectionHeader);
+                      isSectionHeaderAdded = true; // Ставим флаг
+
+                      // Добавляем ссылку в навигацию для секции
+                      addNavLink(sectionData.saga || sectionData.section, sectionId, 'section-link');
+                 }
+
 
                 // Добавляем заголовок фазы/подраздела
                 if (group.phase || group.subgroup) {
@@ -328,39 +333,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     groupHeader.id = groupId;
                     projectListContainer.appendChild(groupHeader);
 
-                     // Добавляем ссылку в навигацию
-                     const navItem = document.createElement('li');
-                     const navLink = document.createElement('a');
-                     navLink.href = `#${groupId}`;
-                     navLink.textContent = group.phase || group.subgroup;
-                     navLink.classList.add(group.phase ? 'phase-link' : 'subgroup-link');
-                     navItem.appendChild(navLink);
-                     navLinksContainer.appendChild(navItem);
+                    // Добавляем ссылку в навигацию для группы
+                    addNavLink(group.phase || group.subgroup, groupId, group.phase ? 'phase-link' : 'subgroup-link');
                 }
 
                  // Рендерим проекты
                 group.projects.forEach(project => {
                      // Добавляем заголовок конкретной подгруппы (напр., Сериалы Netflix, LEGO)
                      if (project.subgroup_title && project.subgroup_title !== currentSubgroupTitle) {
-                         const subgroupSpecificHeader = document.createElement('h5'); // Еще мельче заголовок
-                         const subGroupId = generateId(project.subgroup_title);
-                         subgroupSpecificHeader.classList.add('subgroup-specific-header'); // Отдельный класс если нужно
-                         subgroupSpecificHeader.style.marginLeft = "3rem"; // Доп отступ
-                         subgroupSpecificHeader.style.marginTop = "1rem";
+                         const subgroupSpecificHeader = document.createElement('h5');
+                         const subGroupId = generateId(project.subgroup_title, 'subgroup-specific', subgroupIndex++);
+                         subgroupSpecificHeader.classList.add('subgroup-specific-header');
                          subgroupSpecificHeader.textContent = project.subgroup_title;
                          subgroupSpecificHeader.id = subGroupId;
                          projectListContainer.appendChild(subgroupSpecificHeader);
                          currentSubgroupTitle = project.subgroup_title;
 
-                         // Добавляем ссылку в навигацию
-                         const navItem = document.createElement('li');
-                         const navLink = document.createElement('a');
-                         navLink.href = `#${subGroupId}`;
-                         navLink.textContent = project.subgroup_title;
-                         navLink.classList.add('subgroup-link'); // Используем тот же класс для отступа
-                         navLink.style.paddingLeft = "3.5rem"; // Еще больший отступ
-                         navItem.appendChild(navLink);
-                         navLinksContainer.appendChild(navItem);
+                         // Добавляем ссылку в навигацию для подгруппы
+                         addNavLink(project.subgroup_title, subGroupId, 'subgroup-specific-link');
                      }
 
                      const projectItem = document.createElement('div');
@@ -368,8 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      projectItem.dataset.projectId = project.id;
 
                      const title = document.createElement('h3');
-                     // Убираем номер из заголовка, так как он есть в данных
-                     title.innerHTML = `${project.title}`; // Используем innerHTML для эмодзи
+                     title.innerHTML = project.title; // Используем innerHTML для эмодзи
 
                      const details = document.createElement('p');
                      details.textContent = `Тип: ${project.type || 'Н/Д'} | Дата выхода: ${project.release_date || 'Н/Д'}`;
@@ -381,22 +370,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-         // Добавляем обработчики кликов для навигационных ссылок
+         // Добавляем обработчики кликов для навигационных ссылок после их создания
+        setupNavLinks();
+    }
+
+    // Вспомогательная функция для добавления ссылок в навигацию
+     function addNavLink(text, targetId, className) {
+        const navItem = document.createElement('li');
+        const navLink = document.createElement('a');
+        navLink.href = `#${targetId}`;
+        navLink.textContent = text;
+        if (className) navLink.classList.add(className);
+        navItem.appendChild(navLink);
+        navLinksContainer.appendChild(navItem);
+    }
+
+     // Функция для установки обработчиков навигационных ссылок
+    function setupNavLinks() {
         document.querySelectorAll('#nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    closeNavMenu(); // Закрываем меню после клика
-                }
-            });
-        });
+             // Удаляем старый обработчик, если он был
+             link.removeEventListener('click', handleNavClick);
+             // Добавляем новый
+             link.addEventListener('click', handleNavClick);
+         });
+    }
+
+    // Обработчик клика по навигационной ссылке
+    function handleNavClick(e) {
+        e.preventDefault(); // Предотвращаем стандартный переход по якорю
+        const targetId = e.currentTarget.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            // Плавная прокрутка к элементу
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            closeNavMenu(); // Закрываем меню после клика
+        } else {
+            console.error("Target element not found:", targetId); // Лог для отладки
+            closeNavMenu();
+        }
     }
 
 
-    // Поиск проекта по ID (обновлен для новой структуры данных)
+    // Поиск проекта по ID (без изменений)
     function findProjectById(id) {
          for (const sectionData of marvelData) {
              for (const group of sectionData.groups) {
@@ -407,31 +422,35 @@ document.addEventListener('DOMContentLoaded', () => {
          return null;
      }
 
-    // Открытие модального окна (обновлено для ссылок)
+    // Открытие модального окна (обновлено для рейтингов и ссылок)
     function openModal(projectId) {
         const project = findProjectById(projectId);
         if (!project) return;
 
-        modalTitle.innerHTML = project.title; // Используем innerHTML для эмодзи
+        modalTitle.innerHTML = project.title;
         modalReleaseDate.textContent = project.release_date || 'Н/Д';
         modalDuration.textContent = project.duration || 'Н/Д';
         modalDirector.textContent = project.director || 'Н/Д';
         modalVoiceOver.textContent = project.voice_over || 'Н/Д';
-        modalRatings.textContent = 'Недоступно (требуется внешний поиск)';
         modalNotes.innerHTML = project.notes ? `<p>${project.notes}</p>` : '';
 
-         // Отображение ссылки
-        if (project.link) {
+        // Отображение рейтингов
+        modalImdbRating.textContent = project.imdb_rating || 'Нету данных';
+        modalKinopoiskRating.textContent = project.kinopoisk_rating || 'Нету данных';
+
+        // Отображение ссылки и дисклеймера
+        modalLinkDisclaimer.style.display = 'none'; // Скрываем дисклеймер по умолчанию
+        if (project.link) { // Ссылки из PDF (YouTube/DisneyNow)
             modalLink.innerHTML = `<a href="${project.link}" target="_blank" rel="noopener noreferrer">${project.link.includes('youtube') ? 'Смотреть на YouTube' : (project.link.includes('disney') ? 'Смотреть на Disney Now' : 'Перейти по ссылке')}</a>`;
             modalLinkContainer.style.display = 'block';
-        } else if (project.voice_over && project.voice_over.toLowerCase().includes('hdrezka')) {
-             modalLink.textContent = 'Ссылка HDrezka не найдена в PDF (требуется поиск)';
+        } else if (project.link_search_needed) { // Если указана озвучка, но ссылки нет
+             modalLink.innerHTML = `Поиск на <a href="https://rezka.ag/" target="_blank" rel="noopener noreferrer">rezka.ag</a> (ссылка из PDF отсутствует)`;
              modalLinkContainer.style.display = 'block';
-        }
-         else {
+             modalLinkDisclaimer.style.display = 'inline'; // Показываем дисклеймер
+        } else { // Если ни ссылки, ни упоминания озвучки нет
              modalLink.textContent = 'Ссылка не указана';
-             modalLinkContainer.style.display = 'none'; // Скрываем блок если ссылки нет
-         }
+             modalLinkContainer.style.display = 'none';
+        }
 
 
         modal.style.display = 'block';
@@ -452,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--transition-speed') || '0.3') * 1000);
     }
 
-     // Функция поиска и прокрутки (обновлена для скрытия/показа)
+     // Функция поиска и прокрутки (без изменений от прошлой версии)
     function handleSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
 
@@ -461,51 +480,37 @@ document.addEventListener('DOMContentLoaded', () => {
             currentHighlight = null;
         }
 
-         // Показываем все заголовки перед фильтрацией проектов
-         document.querySelectorAll('.section-header, .phase-header, .subgroup-header, .subgroup-specific-header').forEach(header => header.style.display = '');
-
+        document.querySelectorAll('.section-header, .phase-header, .subgroup-header, .subgroup-specific-header').forEach(header => header.style.display = '');
         const projectItems = document.querySelectorAll('.project-item');
         let firstMatch = null;
-        let visibleItemsCount = 0;
-
 
         projectItems.forEach(item => {
             const titleElement = item.querySelector('h3');
             const title = titleElement ? titleElement.textContent.toLowerCase() : '';
-
-             // Проверяем, содержит ли сам элемент или его заголовок поисковый запрос
-             const projectVisible = searchTerm === '' || title.includes(searchTerm);
-             item.style.display = projectVisible ? '' : 'none';
-
-             if (projectVisible) {
-                 visibleItemsCount++;
-                 if (!firstMatch && searchTerm !== '') { // Находим первое совпадение только если есть поисковый запрос
-                     firstMatch = item;
-                 }
-             }
+            const projectVisible = searchTerm === '' || title.includes(searchTerm);
+            item.style.display = projectVisible ? '' : 'none';
+            if (projectVisible && !firstMatch && searchTerm !== '') {
+                firstMatch = item;
+            }
         });
 
-         // Скрываем заголовки, если под ними нет видимых элементов
-         document.querySelectorAll('.section-header, .phase-header, .subgroup-header, .subgroup-specific-header').forEach(header => {
+        document.querySelectorAll('.section-header, .phase-header, .subgroup-header, .subgroup-specific-header').forEach(header => {
              let nextElement = header.nextElementSibling;
              let hasVisibleSibling = false;
-             while (nextElement && !nextElement.classList.contains('section-header') && !nextElement.classList.contains('phase-header') && !nextElement.classList.contains('subgroup-header') && !nextElement.classList.contains('subgroup-specific-header')) {
-                 if (nextElement.classList.contains('project-item') && nextElement.style.display !== 'none') {
+             while (nextElement && !nextElement.matches('.section-header, .phase-header, .subgroup-header, .subgroup-specific-header')) {
+                 if (nextElement.matches('.project-item') && nextElement.style.display !== 'none') {
                      hasVisibleSibling = true;
                      break;
                  }
                  nextElement = nextElement.nextElementSibling;
              }
-             header.style.display = hasVisibleSibling || searchTerm === '' ? '' : 'none'; // Показываем заголовок, если есть видимые элементы или поиск пуст
+             header.style.display = hasVisibleSibling || searchTerm === '' ? '' : 'none';
          });
 
-
-         // Прокрутка и подсветка
         if (firstMatch) {
-            // Небольшая задержка перед прокруткой, чтобы дать DOM время обновиться
             setTimeout(() => {
                  firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100); // 100ms задержка
+            }, 50); // Уменьшил задержку
 
             firstMatch.classList.add('highlight');
             currentHighlight = firstMatch;
@@ -519,14 +524,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-     // Функция переключения темы (обновлена для иконки)
+    // Функция переключения темы (без изменений)
     function toggleTheme() {
         const isDarkMode = document.body.classList.toggle('dark-theme');
         themeToggleButton.textContent = isDarkMode ? '🌙' : '☀️';
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     }
 
-    // Установка начальной темы (обновлена для иконки)
+    // Установка начальной темы (без изменений)
     function applyInitialTheme() {
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -540,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggleButton.textContent = isDarkMode ? '🌙' : '☀️';
     }
 
-    // Открытие/закрытие навигационного меню
+    // Открытие/закрытие навигационного меню (без изменений)
     function openNavMenu() {
         navMenu.classList.add('open');
         overlay.classList.add('visible');
@@ -550,14 +555,14 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.classList.remove('visible');
     }
 
-     // Открытие/закрытие поиска
+     // Открытие/закрытие поиска (без изменений)
     function toggleSearch() {
         searchContainer.classList.toggle('visible');
          if(searchContainer.classList.contains('visible')) {
-             searchInput.focus(); // Фокус на поле при открытии
+             searchInput.focus();
          } else {
-             searchInput.value = ''; // Очистить поиск при скрытии
-             handleSearch(); // Обновить список
+             searchInput.value = '';
+             handleSearch();
          }
     }
 
@@ -566,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggleButton.addEventListener('click', toggleTheme);
     menuToggleButton.addEventListener('click', openNavMenu);
     closeMenuButton.addEventListener('click', closeNavMenu);
-    overlay.addEventListener('click', closeNavMenu); // Закрытие по клику на оверлей
+    overlay.addEventListener('click', closeNavMenu);
     searchToggleButton.addEventListener('click', toggleSearch);
 
     projectListContainer.addEventListener('click', (event) => {
@@ -585,7 +590,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Инициализация ---
     applyInitialTheme();
-    renderProjectListAndNav(marvelData); // Рендерим и список, и навигацию
+    renderProjectListAndNav(marvelData); // Рендерим список и навигацию
 
 });
-
